@@ -9,6 +9,8 @@ export const SearchBox: React.FC<SearchBoxProps> = React.memo(
   ({ onChange }) => {
     const [searchValue, setSearchValue] = useState("");
 
+    console.log("searchValue", searchValue);
+
     const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearchValue(e.target.value);
       onChange(e.target.value);

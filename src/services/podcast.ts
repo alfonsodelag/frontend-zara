@@ -8,12 +8,15 @@ export const podcastApi = createApi({
   }),
   endpoints: (builder) => ({
     getPodcasts: builder.query({
-  query: () => ({
-    url: "/us/rss/toppodcasts/limit=100/genre=1310/json",
-  }),
+      query: () => ({
+        url: "/us/rss/toppodcasts/limit=100/genre=1310/json",
+      }),
     }),
     getPodcastById: builder.query({
       query: (id) => `/lookup?id=${id}`,
+    }),
+    getEpisodeById: builder.query({
+      query: ({ podcastId, episodeId }) => `/podcast/${podcastId}/episode/${episodeId}`,
     }),
   }),
 });

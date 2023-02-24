@@ -5,6 +5,9 @@ import { PodcastCard } from "../podcastcard";
 export const PodcastList = ({ podcastList }) => {
   const dispatch = useDispatch();
 
+  // Save the podcastList to local storage
+  localStorage.setItem("podcastList", JSON.stringify(podcastList));
+
   return (
     <section className="flex flex-wrap justify-center gap-8">
       {podcastList.map((podcast) => {

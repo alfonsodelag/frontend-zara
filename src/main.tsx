@@ -2,7 +2,7 @@ import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home, PodcastDetail } from "./pages";
+import { Home, PodcastDetail, EpisodeDetail } from "./pages";
 import { MainLayout } from "./components";
 import { store } from "./state/store";
 import { Provider } from "react-redux";
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "podcast/:podcastId",
     element: withLayout(<PodcastDetail />),
+  },
+  {
+    path: "/podcast/:podcastId/episode/:episodeId",
+    element: withLayout(<EpisodeDetail />),
   },
 ]);
 

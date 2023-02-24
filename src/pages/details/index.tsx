@@ -48,6 +48,8 @@ const PodcastDetail = () => {
     navigate(`/podcast/${podcastId}/episode/${row.id}`);
   };
 
+  console.log("data", data);
+
   return (
     <DetailLayout>
       <Container sx={{ marginBottom: 16 }}>
