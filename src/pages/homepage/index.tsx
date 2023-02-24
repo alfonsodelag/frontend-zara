@@ -1,8 +1,16 @@
 import { useMemo, useState } from "react";
-import { PodcastList, SearchBox } from "../../components";
+import { SearchBox, PodcastList } from "../../components";
 import { podcastApi } from "../../services/podcast";
 
-const SearchContainer = ({ filteredItems }: { filteredItems: any[] }) => (
+interface SearchContainerProps {
+  filteredItems: any[];
+  setSearchText: (text: string) => void;
+}
+
+const SearchContainer = ({
+  filteredItems,
+  setSearchText,
+}: SearchContainerProps) => (
   <div className="flex justify-end items-center gap-2 mb-8">
     <span className="bg-blue-500 text-white rounded-full font-bold p-1">
       {filteredItems.length}
@@ -39,7 +47,10 @@ const Home = () => {
 
   return (
     <>
-      <SearchContainer filteredItems={filteredItems} />
+      <SearchContainer
+        filteredItems={filteredItems}
+        setSearchText={setSearchText}
+      />
       <PodcastList podcastList={filteredItems} />
     </>
   );

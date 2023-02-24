@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { saveCurrentPodcast } from "../../state/details.slice";
 import { PodcastCard } from "../podcastcard";
 
-const PodcastList = ({ podcastList }) => {
+export const PodcastList = ({ podcastList }) => {
   const dispatch = useDispatch();
 
   return (
@@ -31,5 +31,3 @@ const PodcastList = ({ podcastList }) => {
     </section>
   );
 };
-
-export default PodcastList;

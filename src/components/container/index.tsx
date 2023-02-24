@@ -1,6 +1,6 @@
 import React from "react";
 
-const Container = ({
+export const Container = ({
   children,
   sx = {},
 }: {
@@ -13,5 +13,3 @@ const Container = ({
     </div>
   );
 };
-
-export default Container;
