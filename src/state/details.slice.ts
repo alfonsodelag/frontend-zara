@@ -1,19 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const podcastSlice =  createSlice({
-    name:"currentPodcast",
-    initialState: {
-        currentPodcast: null
+interface PodcastState {
+  currentPodcast: any;
+}
+
+const initialState: PodcastState = {
+  currentPodcast: null,
+};
+
+const podcastSlice = createSlice({
+  name: "podcast",
+  initialState,
+  reducers: {
+    saveCurrentPodcast(state, action: PayloadAction<any>) {
+      state.currentPodcast = action.payload;
     },
-    reducers:{
-        saveCurrentPodcast(state, action){
-            return {
-                ...state,
-                currentPodcast: action.payload 
-            }
-        }
-    }
-})
+  },
+});
 
-export const { saveCurrentPodcast} = podcastSlice.actions
-export default podcastSlice.reducer
+export const { saveCurrentPodcast } = podcastSlice.actions;
+export default podcastSlice.reducer;

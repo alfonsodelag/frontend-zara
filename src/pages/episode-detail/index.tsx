@@ -6,6 +6,17 @@ import { podcastApi } from "../../services/podcast";
 import { formatDate } from "../../utils/format-date";
 import { formatSeconds } from "../../utils/format-seconds";
 
+interface Episode {
+  trackId: string;
+  trackName: string;
+  releaseDate: string;
+  trackTimeMillis: number;
+  longDescription: string;
+  enclosureUrl: string;
+  trackViewUrl: string;
+  artistViewUrl: string;
+}
+
 const EpisodeDetails = () => {
   const { podcastId, episodeId } = useParams();
   const navigate = useNavigate();
@@ -24,9 +35,11 @@ const EpisodeDetails = () => {
     navigate(`/podcast/${podcastId}`);
   };
 
-  const episode =
+  const episode: Episode | undefined =
     isSuccess &&
-    podcastDetail?.results?.find((episode) => episode.trackId === episodeId);
+    podcastDetail?.results?.find(
+      (episode: Episode) => episode.trackId === episodeId
+    );
 
   const handleTitleClick = () => {
     window.open(episode?.trackViewUrl, "_blank");
@@ -87,13 +100,15 @@ const EpisodeDetails = () => {
               }}
             >
               <div>
-                <p>Released on {formatDate(episode?.releaseDate)}</p>
+                <p>
+                  Released on{" "}
+                  {episode?.releaseDate && formatDate(episode.releaseDate)}
+                </p>
                 <p>
                   Duration:{" "}
                   {typeof episode?.trackTimeMillis === "number"
                     ? formatSeconds(episode?.trackTimeMillis / 1000)
                     : "Unknown"}
-                  Duration: {formatSeconds(episode?.trackTimeMillis / 1000)}
                 </p>
               </div>
               <button

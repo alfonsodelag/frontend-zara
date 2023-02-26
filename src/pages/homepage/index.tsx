@@ -11,7 +11,7 @@ const SearchContainer = ({
   filteredItems,
   setSearchText,
 }: SearchContainerProps) => (
-  <div className="flex justify-end items-center gap-2 mb-8">
+  <div className="flex justify-end items-center gap-2 mb-12">
     <span className="bg-blue-500 text-white rounded-full font-bold p-1">
       {filteredItems.length}
     </span>
