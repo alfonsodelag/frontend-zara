@@ -1,8 +1,10 @@
-import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
+import { RootState } from "../../state/store";
 import { useSelector } from "react-redux";
 
 export const PodcastDetailCard = () => {
-  const { currentPodcast } = useSelector((state: RootState) => state.podcast);
+  const currentPodcast = useSelector(
+    (state: RootState) => state.podcastDetail.currentPodcast
+  );
 
   if (!currentPodcast) {
     const podcastList = JSON.parse(localStorage.getItem("podcastList") || "[]");

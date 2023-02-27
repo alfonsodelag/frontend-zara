@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type RootState = {
+  podcast: PodcastState;
+}
+
 interface PodcastState {
   currentPodcast: any;
 }
