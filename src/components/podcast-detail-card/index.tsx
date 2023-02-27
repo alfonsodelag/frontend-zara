@@ -1,13 +1,16 @@
 import { useSelector } from "react-redux";
 
 export const PodcastDetailCard = () => {
-  const { currentPodcast } = useSelector((state) => state.podcast);
+  const { currentPodcast } = useSelector(
+    (state: { podcast: { currentPodcast: any } }) => state.podcast
+  );
 
   if (!currentPodcast) {
-    const podcastList = JSON.parse(localStorage.getItem("podcastList"));
+    const podcastList = JSON.parse(localStorage.getItem("podcastList") || "[]");
     const id = localStorage.getItem("currentPodcastId");
     const podcast = podcastList.find(
-      (podcast) => podcast.id.attributes["im:id"] === id
+      (podcast: { id: { attributes: { "im:id": string } } }) =>
+        podcast.id.attributes["im:id"] === id
     );
 
     if (!podcast) {
