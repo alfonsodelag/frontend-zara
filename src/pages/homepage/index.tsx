@@ -20,7 +20,7 @@ const SearchContainer = ({
 );
 
 const Home = () => {
-  const { data, isLoading, error } = podcastApi.useGetPodcastsQuery();
+  const { data, isLoading, error } = podcastApi.useGetPodcastsQuery({});
   const [searchText, setSearchText] = useState("");
 
   const filterByText = (field: string) =>
@@ -30,7 +30,7 @@ const Home = () => {
 
   const filteredItems = useMemo(() => {
     if (searchText.length === 0) return podcastList;
-    return podcastList.filter((podcast) => {
+    return podcastList.filter((podcast: any) => {
       const name = podcast["im:name"]["label"];
       const author = podcast["im:artist"]["label"];
       return filterByText(name) || filterByText(author);
@@ -42,7 +42,11 @@ const Home = () => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    if ("message" in error) {
+      return <div>Error: {error.message}</div>;
+    } else {
+      return <div>Error: Something went wrong</div>;
+    }
   }
 
   return (
