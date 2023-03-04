@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { Column } from "react-table";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "../../components/container";
@@ -29,6 +29,7 @@ const PodcastDetail = () => {
     isLoading,
     isSuccess,
   } = podcastApi.useGetPodcastByIdQuery(podcastId);
+
   const podcastDetail = ptmr && JSON.parse(ptmr.contents);
   const navigate = useNavigate();
 
@@ -36,15 +37,17 @@ const PodcastDetail = () => {
     () => [
       {
         Header: "Title",
-        accessor: "title",
+        accessor: "trackName",
       },
       {
         Header: "Date",
-        accessor: "date",
+        accessor: "releaseDate",
+        Cell: ({ value }) => formatDate(value),
       },
       {
         Header: "Duration",
-        accessor: "duration",
+        accessor: "trackTimeMillis",
+        Cell: ({ value }) => formatSeconds(value),
       },
     ],
     []
@@ -59,9 +62,26 @@ const PodcastDetail = () => {
       duration: formatSeconds(podcast.trackTimeMillis),
     }));
 
+  const {
+    data: episodesData,
+    isLoading: episodesLoading,
+    isSuccess: episodesSuccess,
+  } = podcastApi.useGetPodcastEpisodesQuery(podcastId);
+
+  console.log("episodesData", episodesData);
+
+  const episodes = episodesData && episodesData.results;
+
   const handleRowClick = (row: Row) => {
-    navigate(`/podcast/${podcastId}/episode/${row.id}`);
+    console.log("roww: ", row.trackId);
+    navigate(`/podcast/${podcastId}/episode/${row.trackId}`);
   };
+
+  const _episodesData = episodesData?.contents
+    ? JSON.parse(episodesData?.contents)
+    : { results: [] };
+
+  console.log({ _episodesData });
 
   return (
     <DetailLayout>
@@ -74,7 +94,7 @@ const PodcastDetail = () => {
         ) : (
           <Table
             handleRowClick={handleRowClick}
-            data={data}
+            data={_episodesData.results}
             columns={columns}
           />
         )}

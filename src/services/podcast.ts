@@ -16,7 +16,10 @@ export const podcastApi = createApi({
       query: (id) => `/lookup?id=${id}`,
     }),
     getEpisodeById: builder.query({
-      query: ({ podcastId, episodeId }) => `/podcast/${podcastId}/episode/${episodeId}`,
+      query: ( {podcastId, episodeId} ) =>`/lookup?id=${podcastId}/episode/${episodeId}`,
     }),
+   getPodcastEpisodes: builder.query({
+    query: (id) => encodeURIComponent(`/lookup?id=${id}&media=podcast&entity=podcastEpisode`),
   }),
-});
+  }),
+}); 
