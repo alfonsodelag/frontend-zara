@@ -16,19 +16,16 @@ type Podcast = {
 };
 
 type Row = {
+  trackId: any;
   id: string;
-  title: string;
-  date: string;
-  duration: string;
+  trackName: string;
+  releaseDate: string;
+  trackTimeMillis: number;
 };
-
 const PodcastDetail = () => {
   const { podcastId } = useParams();
-  const {
-    data: ptmr,
-    isLoading,
-    isSuccess,
-  } = podcastApi.useGetPodcastByIdQuery(podcastId);
+  const { data: ptmr, isLoading } =
+    podcastApi.useGetPodcastByIdQuery(podcastId);
 
   const podcastDetail = ptmr && JSON.parse(ptmr.contents);
   const navigate = useNavigate();
@@ -42,46 +39,27 @@ const PodcastDetail = () => {
       {
         Header: "Date",
         accessor: "releaseDate",
-        Cell: ({ value }) => formatDate(value),
+        Cell: ({ value }) => <span>{formatDate(value)}</span>,
       },
       {
         Header: "Duration",
         accessor: "trackTimeMillis",
-        Cell: ({ value }) => formatSeconds(value),
+        Cell: ({ value }) => <span>{formatSeconds(value)}</span>,
       },
     ],
     []
   );
 
-  const data =
-    isSuccess &&
-    podcastDetail?.results?.map((podcast: Podcast) => ({
-      id: podcast.trackId,
-      title: podcast.trackName,
-      date: formatDate(podcast.releaseDate),
-      duration: formatSeconds(podcast.trackTimeMillis),
-    }));
-
-  const {
-    data: episodesData,
-    isLoading: episodesLoading,
-    isSuccess: episodesSuccess,
-  } = podcastApi.useGetPodcastEpisodesQuery(podcastId);
-
-  console.log("episodesData", episodesData);
-
-  const episodes = episodesData && episodesData.results;
+  const { data: episodesData } =
+    podcastApi.useGetPodcastEpisodesQuery(podcastId);
 
   const handleRowClick = (row: Row) => {
-    console.log("roww: ", row.trackId);
     navigate(`/podcast/${podcastId}/episode/${row.trackId}`);
   };
 
   const _episodesData = episodesData?.contents
     ? JSON.parse(episodesData?.contents)
     : { results: [] };
-
-  console.log({ _episodesData });
 
   return (
     <DetailLayout>
