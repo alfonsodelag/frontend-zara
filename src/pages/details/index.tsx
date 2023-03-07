@@ -61,10 +61,12 @@ const PodcastDetail = () => {
     ? JSON.parse(episodesData?.contents)
     : { results: [] };
 
+  console.log("_episodesData", _episodesData);
+
   return (
     <DetailLayout>
       <Container sx={{ marginBottom: 16 }}>
-        <h2> Episodes: 66</h2>
+        <h2> Episodes: {_episodesData.resultCount}</h2>
       </Container>
       <Container>
         {isLoading ? (
